@@ -1,3 +1,4 @@
+/*riado um array com todas as informações de cada time do brasileirão*/
 const tabela2024 = [
     {
       nome: 'Athletico',
@@ -221,5 +222,6 @@ const tabela2024 = [
     },
   ];
   
+  /**Exportando o recusro (arquivo tabela2024) para que qualquer outro arquivo JS da aplicação consiga acessar*/
   export default tabela2024;
   
