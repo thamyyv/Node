@@ -41,4 +41,18 @@ app.put('/:sigla', (req, res) => { //instalado o Insomnia e essa requisição si
   res.status(200).send(timeSelecionado); //atualiza o objeto do time selecionado
 }) 
 
-app.listen(300/** porta */, () => console.log('servidor rodando com sucesso')/**Arrow Function */);
+app.post('/', (req, res) =>{ //metodo que cria um novo time
+  const novoTime = req.body; //pega o corpo inteiro da requisição
+  tabela2024.push(novoTime); //metodo que permite adicionar uma nova informação no final da lista
+  res.status(200).send(novoTime);
+})
+
+app.delete('/:sigla', (req, res) => {
+  const siglaInformada = req.params.sigla.toUpperCase(); //linha 16
+  const indexTimeSelecionado = tabela2024.findIndex(t => t.sigla === siglaInformada); //Em vez de pegar o obejto informaod, pega a posição dele no array
+  const timeRemovido = tabela2024.splice(indexTimeSelecionado, 1);//permite remover elemento de um array
+
+  res.status(200).send(timeRemovido)//retorna com o time que foi removido a partir do inde informado
+})
+
+app.listen(300, () => console.log('servidor rodando com sucesso')); //verificar se o servidor está rodando
