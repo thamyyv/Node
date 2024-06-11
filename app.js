@@ -4,6 +4,7 @@ import express from 'express'; /** importando as funcionalidades do framework ex
 //Para instalar o express:  no terminal, rode o comando -> npm install express
 
 const app = express(); // A variavel app está chamando o express, logo, iniciando o servidor da aplicação (app)
+app.use(express.json()); // para o express reconhecer as requisições que vão retornar como JSON
 
 //Para iniciar o backend:  no terminal, rode o comando -> node --watch .\app.js 
 
@@ -28,5 +29,16 @@ app.get ('/:sigla', (requisicao, resposta) => {
   
   resposta.status(200).send(time); // Retorna apenas o objeto com a sigla informada na requisição 
 });
+
+app.put('/:sigla', (req, res) => { //instalado o Insomnia e essa requisição significa alteração de informação
+  const siglaInformada = req.params.sigla.toUpperCase(); //linha 16
+  const timeSelecionado = tabela2024.find(t => t.sigla === siglaInformada); //linha 17
+  const campos = Object.keys(req.body); //pega todos os campos que estão sendo alterados dentro da requisição como array
+ 
+  for (let campo of campos){ //repetição para a variavel ter o valor do campo 
+  timeSelecionado[campo] = req.body[campo]; // vari passar campo por campo que foi enviado na requisiçãoe  atualizar no objeto do Time Selecionado
+  }
+  res.status(200).send(timeSelecionado); //atualiza o objeto do time selecionado
+}) 
 
 app.listen(300/** porta */, () => console.log('servidor rodando com sucesso')/**Arrow Function */);
